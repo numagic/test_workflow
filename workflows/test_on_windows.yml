@@ -1,0 +1,50 @@
+name: Github Actions in Windows
+# See: https://autobencoder.com/2020-08-24-conda-actions/
+# This is a windows specific version, there is also one that uses market conda actions
+# which works for all os (but doesn't seem to work for me on windows?)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    # by default only opened, synchronize and reopened activity would trigger this event
+    # see: https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request
+    # and def on synchronize: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        C:\Miniconda\condabin\conda.bat list
+        C:\Miniconda\condabin\conda.bat init powershell
+    - name: Test with pytest
+      env:
+        PYTHONPATH: D:\a\lumos\lumos # hard-coded pythonpath    
+      run: |
+        # Activate the base environment
+        C:\Miniconda\condabin\conda.bat activate base
+        C:\Miniconda\condabin\conda.bat list
+        C:\Miniconda\condabin\conda.bat install pytest
+        C:\Miniconda\condabin\conda.bat install numpy
+        pip install jaxlib==0.1.71+cuda111
+        pip install jax[cuda111] -f https://whls.blob.core.windows.net/unstable/index.html --use-deprecated legacy-resolver
+        pip install casadi
+        C:\Miniconda\condabin\conda.bat install -c conda-forge cyipopt
+        C:\Miniconda\condabin\conda.bat install parameterized
+        C:\Miniconda\condabin\conda.bat install pandas
+
+        python3 -c "import numpy as np; print('numpy imported')"
+        python3 -c "import jax.numpy as jnp; print('jax imported')"
+        python3 -c "import casadi as cas; print('casadi imported')"
+        pytest

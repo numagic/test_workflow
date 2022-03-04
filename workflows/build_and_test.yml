@@ -1,0 +1,44 @@
+name: build-image-and-test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    # by default only opened, synchronize and reopened activity would trigger this event
+    # see: https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows#pull_request
+    # and def on synchronize: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+    branches:
+      - main
+
+jobs:
+  miniconda:
+    name: Miniconda ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+        matrix:
+            os: [ "linux-latest", "windows-latest"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          activate-environment: test
+          python-version: 3.8
+      - shell: bash -l {0}
+        run: |
+          conda info
+          conda list
+          pwd
+          ls
+          export PYTHONPATH=$(pwd)
+          echo $PYTHONPATH          
+      - name: Run unittest
+        shell: bash -l {0}
+        run: |
+          python3 -c "print(1.0)"
+          python3 -c "import unittest; print('unittest imported')"
+          python3 -c "import numpy as np; print('numpy imported')"
+          python3 -c "import cyipopt; print('cyipopt imported')"
+          conda install pytest
+          pytest
