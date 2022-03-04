@@ -46,6 +46,6 @@ jobs:
           python -c "import numpy as np; print('numpy imported')"
           python -c "import cyipopt; print('cyipopt imported')"
 
-          conda install -c conda-forge jax
+          pip install jax
           conda install pytest
           pytest

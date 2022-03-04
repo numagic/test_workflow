@@ -41,7 +41,7 @@ jobs:
         C:\Miniconda\condabin\conda.bat install -c conda-forge cyipopt
         C:\Miniconda\condabin\conda.bat install parameterized
         C:\Miniconda\condabin\conda.bat install pandas
-        C:\Miniconda\condabin\conda.bat install -c conda-forge jax
+        pip install jax
 
         C:\Miniconda\condabin\conda.bat list
 
