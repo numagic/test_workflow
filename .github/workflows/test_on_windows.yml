@@ -50,3 +50,4 @@ jobs:
         python -c "import numpy as np; print('numpy imported')"
         python -c "import casadi as cas; print('casadi imported')"
         pytest
+        python -m unittest discover -v

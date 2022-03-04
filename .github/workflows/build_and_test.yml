@@ -49,3 +49,4 @@ jobs:
           pip install jax
           conda install pytest
           pytest
+          python -m unittest discover -v
