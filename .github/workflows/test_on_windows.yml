@@ -41,6 +41,8 @@ jobs:
         C:\Miniconda\condabin\conda.bat install -c conda-forge cyipopt
         C:\Miniconda\condabin\conda.bat install parameterized
         C:\Miniconda\condabin\conda.bat install pandas
+        
+        C:\Miniconda\condabin\conda.bat list
 
         python3 -c "import numpy as np; print('numpy imported')"
         python3 -c "import casadi as cas; print('casadi imported')"

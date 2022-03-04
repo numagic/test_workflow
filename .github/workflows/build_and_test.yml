@@ -37,6 +37,8 @@ jobs:
       - name: Run unittest
         shell: bash -l {0}
         run: |
+          conda info
+          conda list
           python3 -c "print(1.0)"
           python3 -c "import unittest; print('unittest imported')"
           python3 -c "import numpy as np; print('numpy imported')"
