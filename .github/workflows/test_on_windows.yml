@@ -37,14 +37,11 @@ jobs:
         C:\Miniconda\condabin\conda.bat list
         C:\Miniconda\condabin\conda.bat install pytest
         C:\Miniconda\condabin\conda.bat install numpy
-        pip install jaxlib==0.1.71+cuda111
-        pip install jax[cuda111] -f https://whls.blob.core.windows.net/unstable/index.html --use-deprecated legacy-resolver
         pip install casadi
         C:\Miniconda\condabin\conda.bat install -c conda-forge cyipopt
         C:\Miniconda\condabin\conda.bat install parameterized
         C:\Miniconda\condabin\conda.bat install pandas
 
         python3 -c "import numpy as np; print('numpy imported')"
-        python3 -c "import jax.numpy as jnp; print('jax imported')"
         python3 -c "import casadi as cas; print('casadi imported')"
         pytest
