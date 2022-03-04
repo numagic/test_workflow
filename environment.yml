@@ -3,6 +3,7 @@ channels:
   - defaults
 dependencies:
   - numpy
+  - casadi
   - cyipopt
   - parameterized
   - pandas 
